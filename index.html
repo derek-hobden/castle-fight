@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Castle Fight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game-canvas"></canvas>
+
+      <div id="hud" class="hidden" aria-live="polite">
+        <header class="top-bar">
+          <div class="brand-mark">Castle Fight</div>
+          <div class="resource-panel">
+            <span class="gold-label">Gold</span>
+            <span id="gold-value">50</span>
+            <span class="income-label">Income</span>
+            <span id="income-value">+5</span>
+          </div>
+          <div class="hp-panel">
+            <div class="hp-row">
+              <span>Your Castle</span>
+              <div class="hp-bar"><div id="player-hp" class="hp-fill player"></div></div>
+            </div>
+            <div class="hp-row">
+              <span>Enemy Castle</span>
+              <div class="hp-bar"><div id="enemy-hp" class="hp-fill enemy"></div></div>
+            </div>
+          </div>
+        </header>
+
+        <aside class="build-menu" id="build-menu">
+          <h2>Raise Structures</h2>
+          <p class="build-hint">Place on your half of the field. Buildings muster troops automatically.</p>
+          <div id="build-buttons" class="build-buttons"></div>
+          <p id="build-status" class="build-status">Choose a structure, then click open ground.</p>
+        </aside>
+
+        <button type="button" id="btn-surrender" class="ghost-btn">Surrender</button>
+      </div>
+
+      <div id="menu-overlay" class="overlay">
+        <div class="overlay-glow"></div>
+        <div class="menu-panel">
+          <p class="eyebrow">A spiritual successor</p>
+          <h1 class="title">Castle Fight</h1>
+          <p class="lede">
+            Muster barracks, flood the lane with auto-marching armies, and raze the enemy keep.
+            No micro — only timing, income, and steel.
+          </p>
+          <div class="cta-row">
+            <button type="button" id="btn-start" class="primary-btn">Enter the Field</button>
+            <button type="button" id="btn-howto" class="ghost-btn">How to Play</button>
+          </div>
+          <p id="howto" class="howto hidden">
+            Gold ticks every few seconds. Build barracks, archer ranges, and stables on your side.
+            Units spawn, march, and fight on their own. Destroy the red castle to win — lose if yours falls.
+          </p>
+        </div>
+      </div>
+
+      <div id="end-overlay" class="overlay hidden">
+        <div class="overlay-glow"></div>
+        <div class="menu-panel end-panel">
+          <h1 id="end-title" class="title">Victory</h1>
+          <p id="end-copy" class="lede"></p>
+          <button type="button" id="btn-again" class="primary-btn">Fight Again</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
