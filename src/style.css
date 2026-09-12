@@ -1,0 +1,409 @@
+:root {
+  --bg-deep: #0f1820;
+  --bg-mist: #1c2a36;
+  --gold: #d4b45a;
+  --gold-dim: #a8893a;
+  --ink: #f2ebe0;
+  --ink-mute: #b9b0a0;
+  --panel: rgba(12, 18, 24, 0.78);
+  --panel-edge: rgba(212, 180, 90, 0.35);
+  --player: #3f8f66;
+  --enemy: #c04545;
+  --danger: #e07050;
+  --font-display: 'Cinzel', 'Palatino Linotype', serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 35%, rgba(70, 90, 70, 0.35), transparent 70%),
+    linear-gradient(160deg, rgba(15, 24, 32, 0.55), rgba(15, 24, 32, 0.88));
+  animation: fade-in 0.6s ease both;
+}
+
+.overlay-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 40%, rgba(212, 180, 90, 0.08) 50%, transparent 60%);
+  animation: sheen 8s linear infinite;
+  pointer-events: none;
+}
+
+.menu-panel {
+  position: relative;
+  z-index: 1;
+  max-width: 36rem;
+  text-align: center;
+  padding: 2.5rem 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  animation: rise 0.7s ease both;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 8vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  animation: rise 0.8s 0.05s ease both;
+}
+
+.lede {
+  margin: 1.1rem auto 0;
+  max-width: 32rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  animation: rise 0.85s 0.12s ease both;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.75rem;
+  animation: rise 0.9s 0.18s ease both;
+}
+
+.primary-btn,
+.ghost-btn,
+.build-btn {
+  font-family: var(--font-body);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.primary-btn {
+  background: linear-gradient(180deg, #e0c36a, #b8923a);
+  color: #1a1408;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #edd07a, #c9a247);
+}
+
+.ghost-btn {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(242, 235, 224, 0.35);
+  padding: 0.8rem 1.25rem;
+  border-radius: 2px;
+}
+
+.ghost-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.howto {
+  margin: 1.25rem auto 0;
+  max-width: 28rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  border-top: 1px solid rgba(212, 180, 90, 0.25);
+  padding-top: 1rem;
+  animation: rise 0.4s ease both;
+}
+
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.top-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(180deg, rgba(10, 14, 18, 0.75), transparent);
+}
+
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.resource-panel {
+  justify-self: center;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 2px;
+  pointer-events: auto;
+}
+
+.gold-label,
+.income-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+}
+
+#gold-value {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--gold);
+  min-width: 2.5rem;
+}
+
+#income-value {
+  color: var(--player);
+  font-weight: 700;
+}
+
+.hp-panel {
+  display: grid;
+  gap: 0.4rem;
+  min-width: min(16rem, 40vw);
+}
+
+.hp-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+}
+
+.hp-bar {
+  height: 0.55rem;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transition: width 0.2s ease;
+}
+
+.hp-fill.player {
+  background: linear-gradient(90deg, #2f6b4f, #5db888);
+}
+
+.hp-fill.enemy {
+  background: linear-gradient(90deg, #8b2e2e, #d65a5a);
+}
+
+.build-menu {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  width: min(18rem, calc(100vw - 2rem));
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 2px;
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+  animation: slide-up 0.5s ease both;
+}
+
+.build-menu h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+.build-hint,
+.build-status {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-mute);
+}
+
+.build-buttons {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.build-btn {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'name cost'
+    'desc desc';
+  gap: 0.15rem 0.5rem;
+  text-align: left;
+  padding: 0.65rem 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+.build-btn:hover:not(:disabled) {
+  border-color: var(--gold-dim);
+}
+
+.build-btn.selected {
+  border-color: var(--gold);
+  background: rgba(212, 180, 90, 0.12);
+}
+
+.build-btn.unaffordable {
+  opacity: 0.55;
+}
+
+.build-btn:disabled {
+  cursor: default;
+}
+
+.build-name {
+  grid-area: name;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.build-cost {
+  grid-area: cost;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+}
+
+.build-desc {
+  grid-area: desc;
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+}
+
+#btn-surrender {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  pointer-events: auto;
+  background: rgba(12, 18, 24, 0.7);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheen {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(30%);
+  }
+}
+
+@media (max-width: 720px) {
+  .top-bar {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .resource-panel {
+    justify-self: start;
+  }
+
+  .build-menu {
+    width: calc(100vw - 2rem);
+  }
+
+  .cta-row {
+    flex-direction: column;
+  }
+}
